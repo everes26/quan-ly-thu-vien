@@ -1,0 +1,18 @@
+version: "1"
+services:
+  kong:
+    build: .
+    container_name: kong-gateway
+    environment:
+      - ENV=dev
+      - KONG_DECLARATIVE_CONFIG=/usr/local/kong/decrelative/kong.yml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout custom_format
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_LOG_LEVEL=debug
+    command: >
+      /bin/bash -c "kong start"
+    restart: on-failure
+    ports:
+      - 8000:8000
